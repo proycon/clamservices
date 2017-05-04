@@ -47,6 +47,7 @@ if 'VIRTUAL_ENV' in os.environ and os.path.exists(os.environ['VIRTUAL_ENV'] +'/b
     ROOT = os.environ['VIRTUAL_ENV'] + "/frog.clam/"
     PORT = 8801
     BINDIR = os.environ['VIRTUAL_ENV'] + '/bin/'
+    FLATURL = "http://127.0.0.1:8000" #local LaMachine FLAT
 
     if host == 'applejack': #configuration for server in Nijmegen
         HOST = "webservices-lst.science.ru.nl"
@@ -74,16 +75,19 @@ if 'VIRTUAL_ENV' in os.environ and os.path.exists(os.environ['VIRTUAL_ENV'] +'/b
         DIGESTOPAQUE = open(os.environ['CLAM_DIGESTOPAQUEFILE']).read().strip()
         SECRET_KEY = open(os.environ['CLAM_SECRETKEYFILE']).read().strip()
         ADMINS = ['proycon','antalb','wstoop']
+        FLATURL = "http://flat.science.ru.nl"
 elif os.path.exists('/usr/bin/frog') and os.path.exists("/home/vagrant") and os.getuid() == 998:
     # Virtual Machine (LaMachine)
     ROOT = "/home/vagrant/frog.clam/"
     PORT = 8801
     BINDIR = '/usr/bin/'
+    FLATURL = "http://127.0.0.1:8000" #local LaMachine FLAT
 elif os.path.exists('/usr/bin/frog') and os.getuid() == 0 and os.path.exists('/etc/arch-release'):
     # Docker (LaMachine)
     ROOT = "/clamdata/frog.clam/"
     PORT = 8801
     BINDIR = '/usr/bin/'
+    FLATURL = "http://127.0.0.1:8000" #local LaMachine FLAT
 elif host == "hostnameofyoursystem":
     #**** adapt hostname and add custom configuration for your system here ****
     raise NotImplementedError
@@ -131,7 +135,7 @@ PROFILES = [
         ),
         OutputTemplate('foliaoutput', FoLiAXMLFormat,"FoLiA Document",
             FoLiAViewer(),
-            #FLATViewer(url="http://127.0.0.1:8000"),
+            FLATViewer(url=FLATURL),
             removeextensions=['.txt'],
             extension='.xml',
             copymetadata=True,
@@ -163,7 +167,7 @@ PROFILES = [
         ),
         OutputTemplate('foliaoutput', FoLiAXMLFormat,"FoLiA Document",
             FoLiAViewer(),
-            FLATViewer(url="http://127.0.0.1:8000"),
+            FLATViewer(url=FLATURL),
             extension='.xml',
             copymetadata=True,
             multi=True,
