@@ -45,6 +45,7 @@ if 'VIRTUAL_ENV' in os.environ and os.path.exists(os.environ['VIRTUAL_ENV'] +'/b
     ROOT = os.environ['VIRTUAL_ENV'] + "/ucto.clam/"
     PORT = 8802
     BINDIR = os.environ['VIRTUAL_ENV'] + '/bin/'
+    FLATURL = "http://127.0.0.1:8000" #local LaMachine FLAT
 
     if host == 'applejack': #configuration for server in Nijmegen
         HOST = "webservices-lst.science.ru.nl"
@@ -72,6 +73,7 @@ if 'VIRTUAL_ENV' in os.environ and os.path.exists(os.environ['VIRTUAL_ENV'] +'/b
         DIGESTOPAQUE = open(os.environ['CLAM_DIGESTOPAQUEFILE']).read().strip()
         SECRET_KEY = open(os.environ['CLAM_SECRETKEYFILE']).read().strip()
         ADMINS = ['proycon','antalb','wstoop']
+        FLATURL = "http://flat.science.ru.nl"
 elif os.path.exists('/usr/bin/ucto') and os.path.exists("/home/vagrant") and os.getuid() == 998:
     # Virtual Machine (LaMachine)
     ROOT = "/home/vagrant/ucto.clam/"
@@ -96,14 +98,14 @@ else:
 #absolute paths is preferred. The current working directory will be
 #set to the project directory.
 #
-#You can make use of the following special variables, 
+#You can make use of the following special variables,
 #which will be automatically set by CLAM:
 #     $INPUTDIRECTORY  - The directory where input files are uploaded.
 #     $OUTPUTDIRECTORY - The directory where the system should output
 #                        its output files.
-#     $STATUSFILE      - Filename of the .status file where the system 
-#                        should output status messages. 
-#     $DATAFILE        - Filename of the clam.xml file describing the 
+#     $STATUSFILE      - Filename of the .status file where the system
+#                        should output status messages.
+#     $DATAFILE        - Filename of the clam.xml file describing the
 #                        system and chosen configuration.
 #     $USERNAME        - The username of the currently logged in user
 #                        (set to "anonymous" if there is none)
@@ -114,8 +116,8 @@ COMMAND =  WRAPPERDIR + "/uctowrapper.py " + BINDIR + " $DATAFILE $STATUSFILE $O
 
 PROFILES = [
     Profile(
-        InputTemplate('untokinput', PlainTextFormat,"Text document", 
-            StaticParameter(id='encoding',name='Encoding',description='The character encoding of the file', value='utf-8'),  
+        InputTemplate('untokinput', PlainTextFormat,"Text document",
+            StaticParameter(id='encoding',name='Encoding',description='The character encoding of the file', value='utf-8'),
             ChoiceParameter(id='language',name='Language',description='The language this text is in', choices=[('en','English'),('nl','Dutch'),('nl-twitter','Dutch on Twitter'),('fr','French'),('de','German'),('it','Italian'),('fy','Frisian')], required=True),
             StringParameter(id='documentid', name='Document ID', description='Enter a unique identifier for this document (no spaces). Needed only for XML output, will be auto-generated if not specified.'),
             StringParameter(id='author', name='Author', description='The author of the document (optional)'),
@@ -129,16 +131,17 @@ PROFILES = [
         ParameterCondition(xml=True, #if the XML parameter is set to True...
         then=OutputTemplate('foliatokoutput', FoLiAXMLFormat, "Tokenised Text Document (FoLiA XML)",
                 SetMetaField('tokenisation','ucto'),
+                FLATViewer(url=FLATURL, mode='viewer'),
                 copymetadata=True,
                 removeextension='txt',
                 extension='xml',
-                multi=True,                
+                multi=True,
              ),
         otherwise=ParameterCondition(verbose=True, #if the verbose parameter is set to True
             then=OutputTemplate('vtokoutput', PlainTextFormat,"Verbosely Tokenised Text Document",
                 ParameterCondition(sentenceperline=True, #set some parameters that reflect the state of certain global paramaters
                     then=SetMetaField('sentenceperline','yes')
-                ),            
+                ),
                 ParameterCondition(lowercase=True,
                     then=SetMetaField('lowercase','yes')
                 ),
@@ -170,13 +173,13 @@ PROFILES = [
     ),
 ]
 
-PARAMETERS =  [ 
+PARAMETERS =  [
     ('Tokenisation options', [
         BooleanParameter('xml','FoLiA XML Output','Output FoLiA XML',value=True),
         BooleanParameter('verbose','Verbose tokeniser output','Outputs token types per token, one token per line',paramflag='-V',forbid=['sentenceperline','xml'] ),
-        BooleanParameter('sentenceperline','Sentence per line','Output each sentence on a single line. Does not work in verbose or XML mode.', paramflag='-n', forbid=['verbose','xml']),    
+        BooleanParameter('sentenceperline','Sentence per line','Output each sentence on a single line. Does not work in verbose or XML mode.', paramflag='-n', forbid=['verbose','xml']),
         BooleanParameter('lowercase','Lowercase','Convert text to lowercase',forbid=['uppercase', 'xml'], paramflag='-l'),
-        BooleanParameter('uppercase','Uppercase','Convert text to uppercase',forbid=['lowercase', 'xml'], paramflag='-u'),        
+        BooleanParameter('uppercase','Uppercase','Convert text to uppercase',forbid=['lowercase', 'xml'], paramflag='-u'),
     ]),
 ]
 
