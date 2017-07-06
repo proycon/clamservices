@@ -118,7 +118,7 @@ PROFILES = [
     Profile(
         InputTemplate('untokinput', PlainTextFormat,"Text document",
             StaticParameter(id='encoding',name='Encoding',description='The character encoding of the file', value='utf-8'),
-            ChoiceParameter(id='language',name='Language',description='The language this text is in', choices=[('eng','English'),('nld','Dutch'),('nld-twitter','Dutch on Twitter'),('fra','French'),('deu','German'),('ita','Italian'),('fry','Frisian')], required=True),
+            ChoiceParameter(id='language',name='Language',description='The language this text is in', choices=[('eng','English'),('nld','Dutch'),('nld-twitter','Dutch on Twitter'),('fra','French'),('deu','German'),('ita','Italian'),('fry','Frisian'), ('swe', 'Swedish'), ('rus', 'Russian'), ('spa', 'Spanish'), ('por', 'Portuguese'), ('tur', 'Turkish')], required=True),
             StringParameter(id='documentid', name='Document ID', description='Enter a unique identifier for this document (no spaces). Needed only for XML output, will be auto-generated if not specified.'),
             StringParameter(id='author', name='Author', description='The author of the document (optional)'),
             PDFtoTextConverter(id='pdfconv',label='Convert from PDF Document'),
