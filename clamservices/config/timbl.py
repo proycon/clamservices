@@ -72,6 +72,33 @@ if 'VIRTUAL_ENV' in os.environ and os.path.exists(os.environ['VIRTUAL_ENV'] +'/b
         DIGESTOPAQUE = open(os.environ['CLAM_DIGESTOPAQUEFILE']).read().strip()
         SECRET_KEY = open(os.environ['CLAM_SECRETKEYFILE']).read().strip()
         ADMINS = ['proycon','antalb','wstoop']
+    elif host == 'mlp01': #new server (Nijmegen)
+        HOST = "new.webservices-lst.science.ru.nl"
+        URLPREFIX = 'timbl'
+
+        if not 'CLAMTEST' in os.environ:
+            ROOT = "/var/www/webservices-lst/live/writable/timbl/"
+            if 'CLAMSSL' in os.environ:
+                PORT = 443
+            else:
+                PORT = 80
+        else:
+            ROOT = "/var/www/webservices-lst/test/writable/timbl/"
+            PORT = 81
+
+        USERS_MYSQL = {
+            'host': 'mysql-clamopener.science.ru.nl',
+            'user': 'clamopener',
+            'password': D(open(os.environ['CLAMOPENER_KEYFILE']).read().strip()),
+            'database': 'clamopener',
+            'table': 'clamusers_clamusers'
+        }
+        DEBUG = False
+        REALM = "WEBSERVICES-LST"
+        DIGESTOPAQUE = open(os.environ['CLAM_DIGESTOPAQUEFILE']).read().strip()
+        SECRET_KEY = open(os.environ['CLAM_SECRETKEYFILE']).read().strip()
+        ADMINS = ['proycon','antalb','wstoop']
+        FLATURL = "https://new.flat.science.ru.nl"
 elif os.path.exists('/usr/bin/timbl') and os.path.exists("/home/vagrant") and os.getuid() == 998:
     # Virtual Machine (LaMachine)
     ROOT = "/home/vagrant/timbl.clam/"

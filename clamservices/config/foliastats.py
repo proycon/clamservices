@@ -69,6 +69,33 @@ if 'VIRTUAL_ENV' in os.environ:
         DIGESTOPAQUE = open(os.environ['CLAM_DIGESTOPAQUEFILE']).read().strip()
         SECRET_KEY = open(os.environ['CLAM_SECRETKEYFILE']).read().strip()
         ADMINS = ['proycon','antalb','wstoop']
+    elif host == 'mlp01': #new server (Nijmegen)
+        HOST = "new.webservices-lst.science.ru.nl"
+        URLPREFIX = 'foliastats'
+
+        if not 'CLAMTEST' in os.environ:
+            ROOT = "/var/www/webservices-lst/live/writable/foliastats/"
+            if 'CLAMSSL' in os.environ:
+                PORT = 443
+            else:
+                PORT = 80
+        else:
+            ROOT = "/var/www/webservices-lst/test/writable/foliastats/"
+            PORT = 81
+
+        USERS_MYSQL = {
+            'host': 'mysql-clamopener.science.ru.nl',
+            'user': 'clamopener',
+            'password': D(open(os.environ['CLAMOPENER_KEYFILE']).read().strip()),
+            'database': 'clamopener',
+            'table': 'clamusers_clamusers'
+        }
+        DEBUG = False
+        REALM = "WEBSERVICES-LST"
+        DIGESTOPAQUE = open(os.environ['CLAM_DIGESTOPAQUEFILE']).read().strip()
+        SECRET_KEY = open(os.environ['CLAM_SECRETKEYFILE']).read().strip()
+        ADMINS = ['proycon','antalb','wstoop']
+        FLATURL = "https://new.flat.science.ru.nl"
 elif host == 'galactica' or host == 'roma': #proycon's laptop/server
     CLAMDIR = "/home/proycon/work/clam"
     ROOT = "/home/proycon/work/foliastats.clam/"
