@@ -106,11 +106,13 @@ elif os.path.exists('/usr/bin/ucto') and os.path.exists("/home/vagrant") and os.
     ROOT = "/home/vagrant/ucto.clam/"
     PORT = 8802
     BINDIR = '/usr/bin/'
+    FLATURL = "http://flat.science.ru.nl"
 elif os.path.exists('/usr/bin/ucto') and os.getuid() == 0 and os.path.exists('/etc/arch-release'):
     # Docker (LaMachine)
     ROOT = "/clamdata/ucto.clam/"
     PORT = 8802
     BINDIR = '/usr/bin/'
+    FLATURL = "http://flat.science.ru.nl"
 elif host == "hostnameofyoursystem":
     #**** adapt hostname and add custom configuration for your system here ****
     raise NotImplementedError
