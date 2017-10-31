@@ -73,7 +73,7 @@ if 'VIRTUAL_ENV' in os.environ and os.path.exists(os.environ['VIRTUAL_ENV'] +'/b
         DIGESTOPAQUE = open(os.environ['CLAM_DIGESTOPAQUEFILE']).read().strip()
         SECRET_KEY = open(os.environ['CLAM_SECRETKEYFILE']).read().strip()
         ADMINS = ['proycon','antalb','wstoop']
-        FLATURL = "http://flat.science.ru.nl"
+        FLATURL = "https://flat.science.ru.nl"
     elif host == 'mlp01': #new server (Nijmegen)
         HOST = "new.webservices-lst.science.ru.nl"
         URLPREFIX = 'ucto'
@@ -100,7 +100,7 @@ if 'VIRTUAL_ENV' in os.environ and os.path.exists(os.environ['VIRTUAL_ENV'] +'/b
         DIGESTOPAQUE = open(os.environ['CLAM_DIGESTOPAQUEFILE']).read().strip()
         SECRET_KEY = open(os.environ['CLAM_SECRETKEYFILE']).read().strip()
         ADMINS = ['proycon','antalb','wstoop']
-        FLATURL = "https://new.flat.science.ru.nl"
+        FLATURL = "https://flat.science.ru.nl"
 elif os.path.exists('/usr/bin/ucto') and os.path.exists("/home/vagrant") and os.getuid() == 998:
     # Virtual Machine (LaMachine)
     ROOT = "/home/vagrant/ucto.clam/"
