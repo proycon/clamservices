@@ -70,7 +70,7 @@ if 'VIRTUAL_ENV' in os.environ:
         SECRET_KEY = open(os.environ['CLAM_SECRETKEYFILE']).read().strip()
         ADMINS = ['proycon','antalb','wstoop']
     elif host == 'mlp01': #new server (Nijmegen)
-        HOST = "new.webservices-lst.science.ru.nl"
+        HOST = "webservices-lst.science.ru.nl"
         URLPREFIX = 'foliastats'
 
         if not 'CLAMTEST' in os.environ:

@@ -77,7 +77,7 @@ if 'VIRTUAL_ENV' in os.environ and os.path.exists(os.environ['VIRTUAL_ENV'] +'/b
         ADMINS = ['proycon','antalb','wstoop']
         FLATURL = "https://flat.science.ru.nl"
     elif host == 'mlp01': #new server (Nijmegen)
-        HOST = "new.webservices-lst.science.ru.nl"
+        HOST = "webservices-lst.science.ru.nl"
         URLPREFIX = 'frog'
 
         if not 'CLAMTEST' in os.environ:
