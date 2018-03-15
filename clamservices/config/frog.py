@@ -27,7 +27,7 @@ import clamservices.wrappers
 import os
 from base64 import b64decode as D
 
-REQUIRE_VERSION = 2.0
+REQUIRE_VERSION = 2.3
 WRAPPERDIR = clamservices.wrappers.__path__[0]
 
 #THIS CONFIGURATION IS FOR FROG >= 0.12.10 ! OLDER VERSIONS WON'T WORK WITH IT!
@@ -41,87 +41,11 @@ SYSTEM_DESCRIPTION = "Frog is a suite containing a tokeniser, Part-of-Speech tag
 USERS = None
 
 # ================ Server specific configuration for CLAM ===============
-host = os.uname()[1]
-if 'VIRTUAL_ENV' in os.environ and os.path.exists(os.environ['VIRTUAL_ENV'] +'/bin/frog'):
-    # Virtual Environment (LaMachine)
-    ROOT = os.environ['VIRTUAL_ENV'] + "/frog.clam/"
-    PORT = 8801
-    BINDIR = os.environ['VIRTUAL_ENV'] + '/bin/'
-    FLATURL = "http://127.0.0.1:8000" #local LaMachine FLAT
 
-    if host == 'applejack': #configuration for server in Nijmegen
-        HOST = "webservices-lst.science.ru.nl"
-        URLPREFIX = 'frog'
+DEBUG = False
 
-        if not 'CLAMTEST' in os.environ:
-            ROOT = "/scratch2/www/webservices-lst/live/writable/frog/"
-            if 'CLAMSSL' in os.environ:
-                PORT = 443
-            else:
-                PORT = 80
-        else:
-            ROOT = "/scratch2/www/webservices-lst/test/writable/frog/"
-            PORT = 81
-
-        USERS_MYSQL = {
-            'host': 'mysql-clamopener.science.ru.nl',
-            'user': 'clamopener',
-            'password': D(open(os.environ['CLAMOPENER_KEYFILE']).read().strip()),
-            'database': 'clamopener',
-            'table': 'clamusers_clamusers'
-        }
-        DEBUG = False
-        REALM = "WEBSERVICES-LST"
-        DIGESTOPAQUE = open(os.environ['CLAM_DIGESTOPAQUEFILE']).read().strip()
-        SECRET_KEY = open(os.environ['CLAM_SECRETKEYFILE']).read().strip()
-        ADMINS = ['proycon','antalb','wstoop']
-        FLATURL = "https://flat.science.ru.nl"
-    elif host == 'mlp01': #new server (Nijmegen)
-        HOST = "webservices-lst.science.ru.nl"
-        URLPREFIX = 'frog'
-
-        if not 'CLAMTEST' in os.environ:
-            ROOT = "/var/www/webservices-lst/live/writable/frog/"
-            if 'CLAMSSL' in os.environ:
-                PORT = 443
-            else:
-                PORT = 80
-        else:
-            ROOT = "/var/www/webservices-lst/test/writable/frog/"
-            PORT = 81
-
-        USERS_MYSQL = {
-            'host': 'mysql-clamopener.science.ru.nl',
-            'user': 'clamopener',
-            'password': D(open(os.environ['CLAMOPENER_KEYFILE']).read().strip()),
-            'database': 'clamopener',
-            'table': 'clamusers_clamusers'
-        }
-        DEBUG = False
-        REALM = "WEBSERVICES-LST"
-        DIGESTOPAQUE = open(os.environ['CLAM_DIGESTOPAQUEFILE']).read().strip()
-        SECRET_KEY = open(os.environ['CLAM_SECRETKEYFILE']).read().strip()
-        ADMINS = ['proycon','antalb','wstoop']
-        FLATURL = "https://flat.science.ru.nl"
-elif os.path.exists('/usr/bin/frog') and os.path.exists("/home/vagrant") and os.getuid() == 998:
-    # Virtual Machine (LaMachine)
-    ROOT = "/home/vagrant/frog.clam/"
-    PORT = 8801
-    BINDIR = '/usr/bin/'
-    FLATURL = "http://127.0.0.1:8000" #local LaMachine FLAT
-elif os.path.exists('/usr/bin/frog') and os.getuid() == 0 and os.path.exists('/etc/arch-release'):
-    # Docker (LaMachine)
-    ROOT = "/clamdata/frog.clam/"
-    PORT = 8801
-    BINDIR = '/usr/bin/'
-    FLATURL = "http://127.0.0.1:8000" #local LaMachine FLAT
-elif host == "hostnameofyoursystem":
-    #**** adapt hostname and add custom configuration for your system here ****
-    raise NotImplementedError
-else:
-    raise Exception("I don't know where I'm running from! Got " + host)
-
-
+#load external configuration file
+loadconfig(__name__)
 
 
 #The system command (Use the variables $STATUSFILE $DATAFILE $PARAMETERS $INPUTDIRECTORY $OUTPUTDIRECTORY $USERNAME)

@@ -1,0 +1,3 @@
+port: 8804
+root: "{{VIRTUAL_ENV}}/timbl.clam"
+bindir: "{{VIRTUAL_ENV}}/bin"

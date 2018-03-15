@@ -1,0 +1,3 @@
+port: 8805
+root: "{{VIRTUAL_ENV}}/foliastats.clam"
+bindir: "{{VIRTUAL_ENV}}/bin"

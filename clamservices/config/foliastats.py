@@ -25,7 +25,7 @@ import clamservices.wrappers
 import os
 from base64 import b64decode as D
 
-REQUIRE_VERSION = 2.0
+REQUIRE_VERSION = 2.3
 WRAPPERDIR = clamservices.wrappers.__path__[0]
 
 #============== General meta configuration =================
@@ -35,85 +35,10 @@ SYSTEM_DESCRIPTION = "N-gram frequency list generation on FoLiA input"
 
 
 USERS = None
+DEBUG = False
 
-# ================ Server specific configuration for CLAM ===============
-host = os.uname()[1]
-if 'VIRTUAL_ENV' in os.environ:
-    ROOT = os.environ['VIRTUAL_ENV'] + "/foliastats.clam/"
-    PORT = 8805
-    BINDIR = os.environ['VIRTUAL_ENV'] + '/bin/'
-
-    if host == 'applejack': #configuration for server in Nijmegen
-        HOST = "webservices-lst.science.ru.nl"
-        URLPREFIX = 'foliastats'
-
-        if not 'CLAMTEST' in os.environ:
-            ROOT = "/scratch2/www/webservices-lst/live/writable/foliastats/"
-            if 'CLAMSSL' in os.environ:
-                PORT = 443
-            else:
-                PORT = 80
-        else:
-            ROOT = "/scratch2/www/webservices-lst/test/writable/foliastats/"
-            PORT = 81
-
-        USERS_MYSQL = {
-            'host': 'mysql-clamopener.science.ru.nl',
-            'user': 'clamopener',
-            'password': D(open(os.environ['CLAMOPENER_KEYFILE']).read().strip()),
-            'database': 'clamopener',
-            'table': 'clamusers_clamusers'
-        }
-        DEBUG = False
-        REALM = "WEBSERVICES-LST"
-        DIGESTOPAQUE = open(os.environ['CLAM_DIGESTOPAQUEFILE']).read().strip()
-        SECRET_KEY = open(os.environ['CLAM_SECRETKEYFILE']).read().strip()
-        ADMINS = ['proycon','antalb','wstoop']
-    elif host == 'mlp01': #new server (Nijmegen)
-        HOST = "webservices-lst.science.ru.nl"
-        URLPREFIX = 'foliastats'
-
-        if not 'CLAMTEST' in os.environ:
-            ROOT = "/var/www/webservices-lst/live/writable/foliastats/"
-            if 'CLAMSSL' in os.environ:
-                PORT = 443
-            else:
-                PORT = 80
-        else:
-            ROOT = "/var/www/webservices-lst/test/writable/foliastats/"
-            PORT = 81
-
-        USERS_MYSQL = {
-            'host': 'mysql-clamopener.science.ru.nl',
-            'user': 'clamopener',
-            'password': D(open(os.environ['CLAMOPENER_KEYFILE']).read().strip()),
-            'database': 'clamopener',
-            'table': 'clamusers_clamusers'
-        }
-        DEBUG = False
-        REALM = "WEBSERVICES-LST"
-        DIGESTOPAQUE = open(os.environ['CLAM_DIGESTOPAQUEFILE']).read().strip()
-        SECRET_KEY = open(os.environ['CLAM_SECRETKEYFILE']).read().strip()
-        ADMINS = ['proycon','antalb','wstoop']
-        FLATURL = "https://flat.science.ru.nl"
-elif host == 'galactica' or host == 'roma': #proycon's laptop/server
-    CLAMDIR = "/home/proycon/work/clam"
-    ROOT = "/home/proycon/work/foliastats.clam/"
-    PORT = 9001
-    BINDIR = "/usr/local/bin/"
-    USERS = { 'proycon': pwhash('proycon', SYSTEM_ID, 'secret') }
-    #URLPREFIX = 'frog'
-elif host == 'echo' or host == 'nomia' or host == 'echo.uvt.nl' or host == 'nomia.uvt.nl': #Tilburg
-    #Assuming ILK server
-    CLAMDIR = "/var/www/clam"
-    ROOT = "/var/www/clamdata/foliastats/"
-    HOST = 'webservices.ticc.uvt.nl'
-    PORT = 80
-    URLPREFIX = 'foliastats'
-    WEBSERVICEGHOST = 'ws'
-    BINDIR = "/var/www/bin/"
-else:
-    raise Exception("I don't know where I'm running from! Got " + host)
+#Load external configuration file
+loadconfig(__name__)
 
 
 

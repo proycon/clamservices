@@ -1,0 +1,3 @@
+port: 8803
+root: "{{VIRTUAL_ENV}}/colibricore.clam"
+bindir: "{{VIRTUAL_ENV}}/bin"

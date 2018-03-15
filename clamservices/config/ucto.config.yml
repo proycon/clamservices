@@ -1,0 +1,4 @@
+port: 8802
+root: "{{VIRTUAL_ENV}}/ucto.clam"
+bindir: "{{VIRTUAL_ENV}}/bin"
+flaturl: "https://flat.science.ru.nl"
