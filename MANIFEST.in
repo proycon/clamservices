@@ -1,0 +1,8 @@
+include README.rst
+include COPYING
+include clamservices/*.py
+include clamservices/wrappers/*.py
+include clamservices/config/*.wsgi
+include clamservices/config/*.yml
+include clamservices/wsgi/*.wsgi
+include clamservices/wsgi/*.py
