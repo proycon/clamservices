@@ -15,7 +15,7 @@ if VIRTUALENV:
     activate_env = VIRTUALENV + '/bin/activate_this.py'
     exec(compile(open(activate_env).read(), activate_env, 'exec'))
 
-import clamservices.config.frog #** import your configuration module here! **
+import clamservices.config.colibricore #** import your configuration module here! **
 import clam.clamservice
-application = clam.clamservice.run_wsgi(clamservices.config.frog) #** pass your module to CLAM **
+application = clam.clamservice.run_wsgi(clamservices.config.colibricore) #** pass your module to CLAM **
 
