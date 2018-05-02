@@ -22,6 +22,7 @@ from clam.common.converters import *
 from clam.common.viewers import *
 from clam.common.data import *
 from clam.common.digestauth import pwhash
+import clamservices.wrappers
 from base64 import b64decode as D
 import clam
 import sys
