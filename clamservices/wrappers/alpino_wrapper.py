@@ -33,7 +33,7 @@ import traceback
 import clam.common.data
 import clam.common.status
 
-from alpino import CUSTOM_FORMATS
+from clamservices.config.alpino import CUSTOM_FORMATS
 
 from foliatools import alpino2folia
 
