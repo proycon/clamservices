@@ -34,6 +34,7 @@ import clam.common.data
 import clam.common.status
 
 from clamservices.config.alpino import CUSTOM_FORMATS
+from natsort import natsorted
 
 from foliatools import alpino2folia
 
@@ -98,16 +99,15 @@ for inputfile in clamdata.input:
     clam.common.status.write(statusfile, "Conversion to FoLiA for " + basename)
     foliafile = os.path.join(outputdir,basename +'.folia.xml')
     doc = alpino2folia.makefoliadoc(foliafile)
-    filenumbers = [ int(os.path.basename(x).replace('.xml','')) for x in glob.glob("*.xml") ]
-    try:
-        for seqnr in sorted(filenumbers):
-            doc = alpino2folia.alpino2folia(str(seqnr) + '.xml',doc)
-        doc.save(foliafile)
-    except Exception as e: #pylint: disable=broad-except
-        print("Error converting Alpino to FoLiA (" + basename +"): " + str(e), file=sys.stderr)
-        exc_type, exc_value, exc_traceback = sys.exc_info()
-        formatted_lines = traceback.format_exc().splitlines()
-        traceback.print_tb(exc_traceback, limit=50, file=sys.stderr)
+    for filename in natsorted( os.path.basename(x) for x in glob.glob("*.xml") ):
+        try:
+            doc = alpino2folia.alpino2folia(filename,doc)
+            doc.save(foliafile)
+        except Exception as e: #pylint: disable=broad-except
+            print("Error converting Alpino to FoLiA (" + basename +"): " + str(e), file=sys.stderr)
+            exc_type, exc_value, exc_traceback = sys.exc_info()
+            formatted_lines = traceback.format_exc().splitlines()
+            traceback.print_tb(exc_traceback, limit=50, file=sys.stderr)
 
     os.chdir('..')
     os.rename('xml','xml_' + basename)
