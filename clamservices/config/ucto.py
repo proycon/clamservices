@@ -26,13 +26,30 @@ import clamservices.wrappers
 import os
 from base64 import b64decode as D
 
-REQUIRE_VERSION = 2.3
+REQUIRE_VERSION = 3.0
 WRAPPERDIR = clamservices.wrappers.__path__[0]
 
 SYSTEM_ID = "ucto"
 SYSTEM_NAME = "Ucto Tokeniser"
 SYSTEM_DESCRIPTION = 'Ucto is a unicode-compliant tokeniser. It takes input in the form of one or more untokenised texts, and subsequently tokenises them. Several languages are supported, but the software is extensible to other languages.'
 
+SYSTEM_AUTHOR = "Maarten van Gompel, Ko van der Sloot"
+
+SYSTEM_AFFILIATION = "Centre for Language and Speech Technology, Radboud University"
+
+SYSTEM_URL = "https://languagemachines.github.io/ucto"
+
+SYSTEM_EMAIL = "lamasoftware@science.ru.nl"
+
+SYSTEM_LICENSE = "GNU General Public License v3"
+
+SYSTEM_COVER_URL = "http://languagemachines.github.io/ucto/style/icon.png"
+
+INTERFACEOPTIONS = "centercover,coverheight100"
+
+CUSTOMHTML_INDEX = """
+Ucto comes with tokenisation rules for several languages and can be easily extended to suit other languages. It has been incorporated for tokenizing Dutch text in Frog, our Dutch morpho-syntactic processor.
+"""
 
 #Users and passwords
 USERS = None #Enable this instead if you want no authentication

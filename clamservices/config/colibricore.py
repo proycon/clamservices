@@ -25,7 +25,7 @@ import clamservices.wrappers
 import os
 from base64 import b64decode as D
 
-REQUIRE_VERSION = 2.3
+REQUIRE_VERSION = 3.0
 WRAPPERDIR = clamservices.wrappers.__path__[0]
 
 
@@ -34,6 +34,29 @@ SYSTEM_ID = "colibricore"
 SYSTEM_NAME = "Colibri Core"
 SYSTEM_DESCRIPTION = "A tool for pattern extraction and analysis on corpus data."
 
+SYSTEM_AUTHOR = "Maarten van Gompel"
+
+SYSTEM_AFFILIATION = "Centre for Language and Speech Technology, Radboud University"
+
+SYSTEM_URL = "https://proycon.github.io/colibri-core"
+
+SYSTEM_EMAIL = "lamasoftware@science.ru.nl"
+
+SYSTEM_LICENSE = "GNU General Public License v3"
+
+SYSTEM_COVER_URL = "https://proycon.github.io/colibri-core/style/icon.png"
+
+INTERFACEOPTIONS = "centercover,coverheight100"
+
+CUSTOMHTML_INDEX = """
+<p>Colibri Core is software to quickly and efficiently count and extract patterns from large corpus data, to extract various statistics on the extracted patterns, and to compute relations between the extracted patterns. The employed notion of pattern or construction encompasses the following categories:</p>
+
+<ul>
+    <li>n-gram -- n consecutive words</li>
+    <li>skipgram -- An abstract pattern of predetermined length with one or multiple gaps (of specific size).</li>
+    <li>flexgram -- An abstract pattern with one or more gaps of variable-size.</li>
+</ul>
+"""
 
 USERS = None
 

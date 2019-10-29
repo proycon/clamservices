@@ -28,7 +28,7 @@ import os
 import spacy
 from base64 import b64decode as D
 
-REQUIRE_VERSION = 2.4
+REQUIRE_VERSION = 3.0
 WRAPPERDIR = clamservices.wrappers.__path__[0]
 
 #THIS CONFIGURATION IS FOR FROG >= 0.12.10 ! OLDER VERSIONS WON'T WORK WITH IT!
@@ -36,7 +36,14 @@ WRAPPERDIR = clamservices.wrappers.__path__[0]
 #============== General meta configuration =================
 SYSTEM_ID = "spacy"
 SYSTEM_NAME = "spaCy"
-SYSTEM_DESCRIPTION = "spaCy is a library for advanced Natural Language Processing. It's built on the very latest research, and was designed from day one to be used in real products. spaCy comes with pre-trained statistical models and word vectors, and currently supports tokenization for 45+ languages. It features the fastest syntactic parser in the world, convolutional neural network models for tagging, parsing and named entity recognition and easy deep learning integration. This webservice provides access to various types of linguistic enrichment for a wide variety of languages. It also support FoLiA XML output."
+SYSTEM_DESCRIPTION = "spaCy is a library for advanced Natural Language Processing. It's built on the very latest research, and was designed from day one to be used in real products. spaCy comes with pre-trained statistical models and word vectors, and currently supports tokenization for 45+ languages. It features the fastest syntactic parser in the world, convolutional neural network models for tagging, parsing and named entity recognition and easy deep learning integration. This webservice  provides access to various types of linguistic enrichment for a wide variety of languages. This webservice is developed by the Centre of Language and Speech Technology (Radboud University, Nijmegen) and wraps around spaCy whilst also providing some extra functionality such as FoLiA XML output."
+
+SYSTEM_AUTHOR = "Matthew Honnibal, Ines Montani et al."
+
+SYSTEM_URL = "https://spacy.io"
+
+SYSTEM_LICENSE = "MIT"
+
 
 
 USERS = None
