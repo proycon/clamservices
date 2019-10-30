@@ -74,12 +74,12 @@ if __name__ == "__main__":
                       ' > ' + shellsafe(outputfilepath,'"'))
         elif outputtemplate == 'vtokoutput':
             #Verbose output
-            os.system(bindir + 'ucto -L ' + shellsafe(language,"'")+ ' ' +
+            os.system(os.path.join(bindir,'ucto') + ' -L ' + shellsafe(language,"'")+ ' ' +
                       commandlineargs + ' ' + shellsafe(str(inputfile),'"') +
                       ' > ' + shellsafe(outputfilepath,'"'))
         elif outputtemplate == 'tokoutput':
             #plain text output
-            os.system(bindir + 'ucto -L ' + shellsafe(language,"'")+ ' ' +
+            os.system(os.path.join(bindir,'ucto') + ' -L ' + shellsafe(language,"'")+ ' ' +
                       commandlineargs + ' ' + shellsafe(str(inputfile),'"') +
                       ' > ' + shellsafe(outputfilepath,'"'))
 

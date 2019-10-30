@@ -12,7 +12,7 @@ def read(fname):
 
 setup(
     name = "CLAMServices",
-    version = "2.0.1",
+    version = "2.0.2",
     author = "Maarten van Gompel",
     author_email = "proycon@anaproy.nl",
     description = ("A collection of CLAM Webservices for various of our NLP tools"),

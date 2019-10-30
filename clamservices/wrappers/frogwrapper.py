@@ -79,7 +79,7 @@ for i, inputfile in enumerate(clamdata.inputfiles('maininput')):
         docid = 'untitled'
 
     print("Invoking Frog",file=sys.stderr)
-    r = os.system(bindir + "frog --language=nld " + shellsafe(cmdoptions) + " -t " + shellsafe(str(inputfile),'"') + " --id=" + shellsafe(docid,"'") + " -X " + shellsafe(outputdir + outputstem + ".xml","'") + " -o " + shellsafe(outputdir + outputstem + ".frog.out","'") + " --threads=1")
+    r = os.system(os.path.join(bindir, "frog") + " --language=nld " + shellsafe(cmdoptions) + " -t " + shellsafe(str(inputfile),'"') + " --id=" + shellsafe(docid,"'") + " -X " + shellsafe(outputdir + outputstem + ".xml","'") + " -o " + shellsafe(outputdir + outputstem + ".frog.out","'") + " --threads=1")
     if r != 0:
         clam.common.status.write(statusfile, "Frog returned with an error whilst processing " + os.path.basename(str(inputfile) + " (plain text). Aborting"),100)
         sys.exit(1)
@@ -96,7 +96,7 @@ for i, inputfile in enumerate(clamdata.inputfiles('foliainput')):
     if outputstem[-4:] == '.xml' or outputstem[-4:] == '.txt': outputstem = outputstem[:-4]
 
     print("Invoking Frog",file=sys.stderr)
-    r = os.system(bindir + "frog --language=nld " + shellsafe(cmdoptions) + " -x " + shellsafe(str(inputfile),'"') + " -X " + shellsafe(outputdir + outputstem + ".xml","'") + " -o " + shellsafe(outputdir + outputstem + ".frog.out","'") + " --threads=1")
+    r = os.system(os.path.join(bindir, "frog") + " --language=nld " + shellsafe(cmdoptions) + " -x " + shellsafe(str(inputfile),'"') + " -X " + shellsafe(outputdir + outputstem + ".xml","'") + " -o " + shellsafe(outputdir + outputstem + ".frog.out","'") + " --threads=1")
     if r != 0:
         clam.common.status.write(statusfile, "Frog returned with an error whilst processing " + os.path.basename(str(inputfile) + " (FoLiA). Aborting"),100)
         sys.exit(1)
