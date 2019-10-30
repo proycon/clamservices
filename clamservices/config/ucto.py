@@ -82,7 +82,7 @@ loadconfig(__name__)
 #                        (set to "anonymous" if there is none)
 #     $PARAMETERS      - List of chosen parameters, using the specified flags
 #
-COMMAND =  WRAPPERDIR + "/uctowrapper.py " + BINDIR + " $DATAFILE $STATUSFILE $OUTPUTDIRECTORY > $OUTPUTDIRECTORY/log"
+COMMAND =  WRAPPERDIR + "/uctowrapper.py " + BINDIR + " $DATAFILE $STATUSFILE $OUTPUTDIRECTORY"
 
 
 PROFILES = [
