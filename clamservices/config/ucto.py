@@ -43,7 +43,7 @@ SYSTEM_EMAIL = "lamasoftware@science.ru.nl"
 
 SYSTEM_LICENSE = "GNU General Public License v3"
 
-SYSTEM_COVER_URL = "http://languagemachines.github.io/ucto/style/icon.png"
+SYSTEM_COVER_URL = "https://languagemachines.github.io/ucto/style/icon.png"
 
 INTERFACEOPTIONS = "centercover,coverheight100"
 
