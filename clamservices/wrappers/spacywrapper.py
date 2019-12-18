@@ -51,11 +51,22 @@ inputfiles = []
 for i, inputfile in enumerate(clamdata.inputfiles('textinput')):
     inputfiles.append(inputfile)
 
+models = {}
+for lang in spacy.info()['Models'].split(','):
+    lang = lang.strip()
+    for model in spacy.info(lang):
+        if lang not in models:
+            models[lang] = lang + "_" + model['name']
 
 clam.common.status.write(statusfile, "Processing ...")
 
-os.chdir(outputdir) #spacy2folia writes in currenet working directory
-os.system("spacy2folia --model " + shellsafe(clamdata['model']) + " ".join(( shellsafe(str(inputfile),) for inputfile in inputfiles )))
+if clamdata['model'] in models:
+    model = models[clamdata['model']]
+else:
+    model = clamdata['model']
+
+os.chdir(outputdir) #spacy2folia writes in current working directory
+os.system("spacy2folia --model " + shellsafe(model) + " ".join(( shellsafe(str(inputfile),) for inputfile in inputfiles )))
 if r != 0:
     clam.common.status.write(statusfile, "Spacy returned with an error whilst processing. Aborting",100)
     sys.exit(1)

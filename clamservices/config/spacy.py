@@ -35,10 +35,10 @@ WRAPPERDIR = clamservices.wrappers.__path__[0]
 
 #============== General meta configuration =================
 SYSTEM_ID = "spacy"
-SYSTEM_NAME = "spaCy"
-SYSTEM_DESCRIPTION = "spaCy is a library for advanced Natural Language Processing. It's built on the very latest research, and was designed from day one to be used in real products. spaCy comes with pre-trained statistical models and word vectors, and currently supports tokenization for 45+ languages. It features the fastest syntactic parser in the world, convolutional neural network models for tagging, parsing and named entity recognition and easy deep learning integration. This webservice  provides access to various types of linguistic enrichment for a wide variety of languages. This webservice is developed by the Centre of Language and Speech Technology (Radboud University, Nijmegen) and wraps around spaCy whilst also providing some extra functionality such as FoLiA XML output."
+SYSTEM_NAME = "spaCy (to FoLiA)"
+SYSTEM_DESCRIPTION = "spaCy is a library for advanced Natural Language Processing. It's built on the very latest research, and was designed from day one to be used in real products. spaCy comes with pre-trained statistical models and word vectors, and currently supports tokenization for 45+ languages. It features the fastest syntactic parser in the world, convolutional neural network models for tagging, parsing and named entity recognition and easy deep learning integration. This webservice  provides access to various types of linguistic enrichment for a wide variety of languages. This webservice is developed by the Centre of Language and Speech Technology (Radboud University, Nijmegen) and provides FoLiA XML output."
 
-SYSTEM_AUTHOR = "Matthew Honnibal, Ines Montani et al."
+SYSTEM_AUTHOR = "Matthew Honnibal, Ines Montani et al., FoLiA wrapper by Maarten van Gompel"
 
 SYSTEM_URL = "https://spacy.io"
 
@@ -51,6 +51,7 @@ USERS = None
 # ================ Server specific configuration for CLAM ===============
 
 DEBUG = False
+FLATURL = None
 
 #load external configuration file
 loadconfig(__name__)
@@ -64,10 +65,6 @@ PROFILES = [
     Profile(
         InputTemplate('textinput', PlainTextFormat,"Text document",
             StaticParameter(id='encoding',name='Encoding',description='The character encoding of the file', value='utf-8'),
-            PDFtoTextConverter(id='pdfconv',label='Convert from PDF Document'),
-            MSWordConverter(id='mswordconv',label='Convert from MS Word Document'),
-            CharEncodingConverter(id='latin1',label='Convert from Latin-1 (iso-8859-1)',charset='iso-8859-1'),
-            CharEncodingConverter(id='latin9',label='Convert from Latin-9 (iso-8859-15)',charset='iso-8859-15'),
             multi=True,
             extension='.txt',
         ),
@@ -83,12 +80,16 @@ PROFILES = [
 ]
 
 models = []
-for lang in spacy.info()['models']:
+for lang in spacy.info()['Models'].split(','):
+    lang = lang.strip()
     for model in spacy.info(lang):
-        models.append( ( lang + "_" + model['name'] + model['description'] ) )
+        if lang not in (x[0] for x in models):
+            models.append( ( lang, lang + "_" + model['name'] + ": " + model['description'] ) )
+        else:
+            models.append( ( lang + "_" + model['name'], lang + "_" + model['name'] + ": " + model['description'] ) )
 
 PARAMETERS =  [
     ('Model Selection', [
-        ChoiceParameter('model', 'Model','The spaCy model to use, determines for what language is processed and what linguistic enrichments are performed',choices=models,required=True ),
+        ChoiceParameter('model', 'Model','The spaCy model to use, determines what language is processed and what linguistic enrichments are performed',choices=models,required=True ),
     ]),
 ]
