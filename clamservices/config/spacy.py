@@ -58,7 +58,7 @@ loadconfig(__name__)
 
 
 #The system command (Use the variables $STATUSFILE $DATAFILE $PARAMETERS $INPUTDIRECTORY $OUTPUTDIRECTORY $USERNAME)
-COMMAND = WRAPPERDIR + "/spacywrapper.py $DATAFILE $STATUSFILE $OUTPUTDIRECTORY > $OUTPUTDIRECTORY/log"
+COMMAND = WRAPPERDIR + "/spacywrapper.py $DATAFILE $STATUSFILE $OUTPUTDIRECTORY"
 
 
 PROFILES = [
@@ -82,11 +82,11 @@ PROFILES = [
 models = []
 for lang in spacy.info()['Models'].split(','):
     lang = lang.strip()
-    for model in spacy.info(lang):
-        if lang not in (x[0] for x in models):
-            models.append( ( lang, lang + "_" + model['name'] + ": " + model['description'] ) )
-        else:
-            models.append( ( lang + "_" + model['name'], lang + "_" + model['name'] + ": " + model['description'] ) )
+    model = spacy.info(lang)
+    if lang not in (x[0] for x in models):
+        models.append( ( lang, lang + "_" + model['name'] + ": " + model['description'] ) )
+    else:
+        models.append( ( lang + "_" + model['name'], lang + "_" + model['name'] + ": " + model['description'] ) )
 
 PARAMETERS =  [
     ('Model Selection', [

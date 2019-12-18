@@ -29,6 +29,8 @@ import clam.common.status
 import clam.common.parameters
 import clam.common.formats
 
+import spacy
+
 shellsafe = clam.common.data.shellsafe
 
 #this script takes three arguments: $DATAFILE $STATUSFILE $OUTPUTDIRECTORY
@@ -54,9 +56,9 @@ for i, inputfile in enumerate(clamdata.inputfiles('textinput')):
 models = {}
 for lang in spacy.info()['Models'].split(','):
     lang = lang.strip()
-    for model in spacy.info(lang):
-        if lang not in models:
-            models[lang] = lang + "_" + model['name']
+    model = spacy.info(lang)
+    if lang not in models:
+        models[lang] =  lang + "_" + model['name']
 
 clam.common.status.write(statusfile, "Processing ...")
 
@@ -65,8 +67,10 @@ if clamdata['model'] in models:
 else:
     model = clamdata['model']
 
+inputfilepaths = [ os.path.abspath(str(inputfile)) for inputfile in inputfiles ]
+
 os.chdir(outputdir) #spacy2folia writes in current working directory
-os.system("spacy2folia --model " + shellsafe(model) + " ".join(( shellsafe(str(inputfile),) for inputfile in inputfiles )))
+r = os.system("spacy2folia --model " + shellsafe(model) + " " + " ".join(( shellsafe(f,) for f in inputfilepaths )))
 if r != 0:
     clam.common.status.write(statusfile, "Spacy returned with an error whilst processing. Aborting",100)
     sys.exit(1)
