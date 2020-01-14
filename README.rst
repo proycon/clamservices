@@ -12,6 +12,7 @@ CLAM webservices for the following tools are supplied here:
 * `Timbl <https://languagemachines.github.io/timbl>`_
 * `Colibri Core <https://proycon.github.io/colibri-core>`_
 * `Alpino <http://www.let.rug.nl/vannoord/alp/Alpino/>`_
+* `SpaCy <https://spacy.io>`_ (with added FoLiA support)
 
 The tools themselves are not in this repository and need to be installed
 separately, we recommend to use our `LaMachine <https://proycon.github.io/LaMachine>`_
