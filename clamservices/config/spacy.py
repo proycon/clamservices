@@ -31,8 +31,6 @@ from base64 import b64decode as D
 REQUIRE_VERSION = 3.0
 WRAPPERDIR = clamservices.wrappers.__path__[0]
 
-#THIS CONFIGURATION IS FOR FROG >= 0.12.10 ! OLDER VERSIONS WON'T WORK WITH IT!
-
 #============== General meta configuration =================
 SYSTEM_ID = "spacy"
 SYSTEM_NAME = "spaCy (to FoLiA)"
