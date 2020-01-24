@@ -95,6 +95,7 @@ for inputfile in clamdata.input:
         sys.exit(2)
 
     os.chdir("xml")
+    clam.common.status.write(statusfile, "Preparing output archive for " + basename)
     os.system("zip ../" + basename + ".alpinoxml.zip *.xml")
     clam.common.status.write(statusfile, "Conversion to FoLiA for " + basename)
     foliafile = os.path.join(outputdir,basename +'.folia.xml')
