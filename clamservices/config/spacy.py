@@ -75,6 +75,20 @@ PROFILES = [
             multi=True,
         ),
     ),
+    Profile(
+        InputTemplate('foliainput', FoLiAXMLFormat,"FoLiA Document",
+            extension='.xml',
+            multi=True,
+        ),
+        OutputTemplate('foliaoutput', FoLiAXMLFormat,"FoLiA Document",
+            FoLiAViewer(),
+            FLATViewer(url=FLATURL, mode='viewer'),
+            removeextensions=['.txt'],
+            extension='.folia.xml',
+            copymetadata=True,
+            multi=True,
+        ),
+    ),
 ]
 
 models = []

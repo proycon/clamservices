@@ -52,6 +52,8 @@ clam.common.status.write(statusfile, "Starting...")
 inputfiles = []
 for i, inputfile in enumerate(clamdata.inputfiles('textinput')):
     inputfiles.append(inputfile)
+for i, inputfile in enumerate(clamdata.inputfiles('foliainput')):
+    inputfiles.append(inputfile)
 
 models = {}
 for lang in spacy.info()['Models'].split(','):
