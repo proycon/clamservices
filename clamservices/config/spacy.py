@@ -25,7 +25,7 @@ from clam.common.converters import *
 from clam.common.digestauth import pwhash
 import clamservices.wrappers
 import os
-import spacy
+from spacy import info
 from base64 import b64decode as D
 
 REQUIRE_VERSION = 3.0
@@ -91,9 +91,9 @@ PROFILES = [
 ]
 
 models = []
-for lang in spacy.info()['Models'].split(','):
+for lang in info(silent=True)['Models'].split(','):
     lang = lang.strip()
-    model = spacy.info(lang)
+    model = info(lang,silent=True)
     if lang not in (x[0] for x in models):
         models.append( ( lang, lang + "_" + model['name'] + ": " + model['description'] ) )
     else:
