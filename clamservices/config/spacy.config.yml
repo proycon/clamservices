@@ -1,4 +1,3 @@
 port: 8807
 root: "{{VIRTUAL_ENV}}/spacy.clam"
 bindir: "{{VIRTUAL_ENV}}/bin"
-flaturl: "https://flat.science.ru.nl"

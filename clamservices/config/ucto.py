@@ -58,6 +58,8 @@ USERS = None #Enable this instead if you want no authentication
 # ================ Server specific configuration for CLAM ===============
 DEBUG = False
 
+FLATURL = None
+
 #Load externa configuration file
 loadconfig(__name__)
 
@@ -102,7 +104,7 @@ PROFILES = [
         ParameterCondition(xml=True, #if the XML parameter is set to True...
         then=OutputTemplate('foliatokoutput', FoLiAXMLFormat, "Tokenised Text Document (FoLiA XML)",
                 SetMetaField('tokenisation','ucto'),
-                FLATViewer(url=FLATURL, mode='viewer'),
+                FLATViewer(url=FLATURL, mode='viewer') if FLATURL else None,
                 copymetadata=True,
                 removeextension='txt',
                 extension='xml',

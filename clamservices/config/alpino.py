@@ -66,6 +66,7 @@ INTERFACEOPTIONS = "centercover,coverheight100"
 USERS = None #no user authentication/security (this is not recommended for production environments!)
 
 DEBUG = False
+FLATURL = None
 
 if 'ALPINO_HOME' in os.environ:
     ALPINO_HOME = os.environ['ALPINO_HOME']
@@ -128,6 +129,7 @@ PROFILES = [
         ),
         OutputTemplate('foliaoutput',FoLiAXMLFormat,'FoLiA XML Output',
             FoLiAViewer(),
+            FLATViewer(url=FLATURL, mode='viewer') if FLATURL else None,
             extension='.folia.xml', #set an extension or set a filename:
             removeextension='.txt',
             multi=True,

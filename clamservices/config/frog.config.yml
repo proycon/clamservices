@@ -1,4 +1,3 @@
 port: 8801
 root: "{{VIRTUAL_ENV}}/frog.clam"
 bindir: "{{VIRTUAL_ENV}}/bin"
-flaturl: "https://flat.science.ru.nl"

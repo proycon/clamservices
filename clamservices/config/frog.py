@@ -73,6 +73,7 @@ USERS = None
 # ================ Server specific configuration for CLAM ===============
 
 DEBUG = False
+FLATURL = None
 
 #load external configuration file
 loadconfig(__name__)
@@ -116,7 +117,7 @@ PROFILES = [
         ),
         OutputTemplate('foliaoutput', FoLiAXMLFormat,"FoLiA Document",
             FoLiAViewer(),
-            FLATViewer(url=FLATURL, mode='viewer'),
+            FLATViewer(url=FLATURL, mode='viewer') if FLATURL else None,
             removeextensions=['.txt'],
             extension='.xml',
             copymetadata=True,
@@ -148,7 +149,7 @@ PROFILES = [
         ),
         OutputTemplate('foliaoutput', FoLiAXMLFormat,"FoLiA Document",
             FoLiAViewer(),
-            FLATViewer(url=FLATURL, mode='viewer'),
+            FLATViewer(url=FLATURL, mode='viewer') if FLATURL else None,
             extension='.xml',
             copymetadata=True,
             multi=True,
