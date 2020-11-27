@@ -35,5 +35,5 @@ setup(
     ],
     package_data = {'clamservices':['wrappers/*.sh','wsgi/*.wsgi','config/*.yml'] },
     include_package_data=True,
-    install_requires=['CLAM >= 3.0', 'natsort']
+    install_requires=['CLAM >= 3.0.22', 'natsort']
 )

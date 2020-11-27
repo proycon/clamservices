@@ -23,6 +23,7 @@ import os
 #import CLAM-specific modules. The CLAM API makes a lot of stuff easily accessible.
 import clam.common.data
 import clam.common.status
+from clam.common.util import makencname
 
 shellsafe = clam.common.data.shellsafe
 
@@ -48,40 +49,48 @@ if __name__ == "__main__":
 
     l = len(clamdata.program) #total amount of output files, for computation of progress
     for i, (outputfile, outputtemplate) in enumerate(clamdata.program.getoutputfiles()):
-        #Get path+filename for the outputfile
-        outputfilepath = str(outputfile)
+        if outputtemplate in ('foliatokoutput','vtokoutput','tokoutput'):
+            #Get path+filename for the outputfile
+            outputfilepath = str(outputfile)
 
-        #Update our status message to let CLAM know what we're doing
-        clam.common.status.write(statusfile, "Producing " + os.path.basename(outputfilepath) + "...", round((i/l)*100))
+            #Update our status message to let CLAM know what we're doing
+            clam.common.status.write(statusfile, "Producing " + os.path.basename(outputfilepath) + "...", round((i/l)*100))
 
-        #We need one of the metadata fields (inherited from the input data), all of the output templates we defined have this parameter
-        language = outputfile.metadata['language']
+            #We need one of the metadata fields (inherited from the input data), all of the output templates we defined have this parameter
+            language = outputfile.metadata['language']
 
-        #We have a one-one relationship between inputfiles and outputfiles, so we can grab the input file here:
-        inputfile, inputtemplate = clamdata.program.getinputfile(outputfile)
+            #We have a one-one relationship between inputfiles and outputfiles, so we can grab the input file here:
+            inputfile, inputtemplate = clamdata.program.getinputfile(outputfile)
 
-        #Which outputtemplate are we processing?
-        if outputtemplate == 'foliatokoutput':
-            #FoLiA XML output
-            docid = None
-            if 'documentid' in inputfile.metadata and inputfile.metadata['documentid']:
-                docid = inputfile.metadata['documentid']
-            if not docid:
-                docid = "untitled"
-            os.system(bindir + 'ucto -L ' + shellsafe(language,"'") + ' -x ' +
-                      shellsafe(docid,"'") + ' ' + commandlineargs + ' ' +
-                      shellsafe(str(inputfile),'"') +
-                      ' > ' + shellsafe(outputfilepath,'"'))
-        elif outputtemplate == 'vtokoutput':
-            #Verbose output
-            os.system(os.path.join(bindir,'ucto') + ' -L ' + shellsafe(language,"'")+ ' ' +
-                      commandlineargs + ' ' + shellsafe(str(inputfile),'"') +
-                      ' > ' + shellsafe(outputfilepath,'"'))
-        elif outputtemplate == 'tokoutput':
-            #plain text output
-            os.system(os.path.join(bindir,'ucto') + ' -L ' + shellsafe(language,"'")+ ' ' +
-                      commandlineargs + ' ' + shellsafe(str(inputfile),'"') +
-                      ' > ' + shellsafe(outputfilepath,'"'))
+            #Which outputtemplate are we processing?
+            if outputtemplate == 'foliatokoutput':
+                #FoLiA XML output
+                docid = None
+                if 'documentid' in inputfile.metadata and inputfile.metadata['documentid']:
+                    docid = inputfile.metadata['documentid']
+                else:
+                    docid = makencname(os.path.basename(str(inputfile)).replace(".txt","").replace(".folia.xml","").replace(".xml",""))
+                if not docid:
+                    docid = "untitled"
+                if os.system(os.path.join(bindir,'ucto') + ' -L ' + shellsafe(language,"'") + ' -X --id=' +
+                          shellsafe(docid,"'") + ' ' + commandlineargs + ' ' +
+                          shellsafe(str(inputfile),'"') +  ' ' + shellsafe(outputfilepath,'"')) != 0:
+                    clam.common.status.write(statusfile, "Failed",100) # status update
+                    sys.exit(1)
+            elif outputtemplate == 'vtokoutput':
+                #Verbose output
+                if os.system(os.path.join(bindir,'ucto') + ' -L ' + shellsafe(language,"'")+ ' ' +
+                          commandlineargs + ' ' + shellsafe(str(inputfile),'"') +
+                         ' > ' + shellsafe(outputfilepath,'"')) != 0:
+                    clam.common.status.write(statusfile, "Failed",100) # status update
+                    sys.exit(1)
+            elif outputtemplate == 'tokoutput':
+                #plain text output
+                if os.system(os.path.join(bindir,'ucto') + ' -L ' + shellsafe(language,"'")+ ' ' +
+                          commandlineargs + ' ' + shellsafe(str(inputfile),'"') +
+                          ' > ' + shellsafe(outputfilepath,'"'))  != 0:
+                    clam.common.status.write(statusfile, "Failed",100) # status update
+                    sys.exit(1)
 
     #A nice status message to indicate we're done
     clam.common.status.write(statusfile, "Done",100) # status update
