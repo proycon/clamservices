@@ -74,6 +74,7 @@ USERS = None
 
 DEBUG = False
 FLATURL = None
+SWITCHBOARD_FORWARD_URL = None
 
 #load external configuration file
 loadconfig(__name__)
@@ -118,6 +119,7 @@ PROFILES = [
         OutputTemplate('foliaoutput', FoLiAXMLFormat,"FoLiA Document",
             FoLiAViewer(),
             FLATViewer(url=FLATURL, mode='viewer') if FLATURL else None,
+            ForwardViewer(id='switchboardforwarder',name="Open in CLARIN Switchboard",forwarder=Forwarder('switchboard','CLARIN Switchboard',SWITCHBOARD_FORWARD_URL)) if SWITCHBOARD_FORWARD_URL else None,
             removeextensions=['.txt'],
             extension='.xml',
             copymetadata=True,
@@ -150,6 +152,7 @@ PROFILES = [
         OutputTemplate('foliaoutput', FoLiAXMLFormat,"FoLiA Document",
             FoLiAViewer(),
             FLATViewer(url=FLATURL, mode='viewer') if FLATURL else None,
+            ForwardViewer(id='switchboardforwarder',name="Open in CLARIN Switchboard",forwarder=Forwarder('switchboard','CLARIN Switchboard',SWITCHBOARD_FORWARD_URL)) if SWITCHBOARD_FORWARD_URL else None,
             extension='.xml',
             copymetadata=True,
             multi=True,

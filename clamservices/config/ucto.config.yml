@@ -1,3 +1,4 @@
 port: 8802
 root: "{{VIRTUAL_ENV}}/ucto.clam"
 bindir: "{{VIRTUAL_ENV}}/bin"
+switchboard_forward_url: "https://switchboard.clarin.eu/#/ucto/$BACKLINK/$MIMETYPE/$LANGUAGE"

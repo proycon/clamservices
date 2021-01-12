@@ -12,7 +12,7 @@ def read(fname):
 
 setup(
     name = "CLAMServices",
-    version = "2.2.3",
+    version = "2.2.4",
     author = "Maarten van Gompel",
     author_email = "proycon@anaproy.nl",
     description = ("A collection of CLAM Webservices for various of our NLP tools"),
@@ -35,5 +35,5 @@ setup(
     ],
     package_data = {'clamservices':['wrappers/*.sh','wsgi/*.wsgi','config/*.yml'] },
     include_package_data=True,
-    install_requires=['CLAM >= 3.0.22', 'natsort']
+    install_requires=['CLAM >= 3.1.0', 'natsort']
 )
