@@ -61,6 +61,7 @@ DEBUG = False
 FLATURL = None
 
 SWITCHBOARD_FORWARD_URL = None
+FROG_FORWARD_URL = None
 
 #Load externa configuration file
 loadconfig(__name__)
@@ -108,6 +109,7 @@ PROFILES = [
                 SetMetaField('tokenisation','ucto'),
                 FLATViewer(url=FLATURL, mode='viewer') if FLATURL else None,
                 ForwardViewer(id='switchboardforwarder',name="Open in CLARIN Switchboard",forwarder=Forwarder('switchboard','CLARIN Switchboard',SWITCHBOARD_FORWARD_URL)) if SWITCHBOARD_FORWARD_URL else None,
+                ForwardViewer(id='frogforwarder',name="Continue with Frog",forwarder=Forwarder('frog','Frog',FROG_FORWARD_URL)) if FROG_FORWARD_URL else None,
                 copymetadata=True,
                 removeextension='txt',
                 extension='xml',

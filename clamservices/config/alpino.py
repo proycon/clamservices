@@ -68,6 +68,7 @@ USERS = None #no user authentication/security (this is not recommended for produ
 DEBUG = False
 FLATURL = None
 SWITCHBOARD_FORWARD_URL = None
+FROG_FORWARD_URL = None
 
 if 'ALPINO_HOME' in os.environ:
     ALPINO_HOME = os.environ['ALPINO_HOME']
@@ -105,6 +106,7 @@ PROFILES = [
         OutputTemplate('foliaoutput',FoLiAXMLFormat,'FoLiA XML Output',
             FoLiAViewer(),
             ForwardViewer(id='switchboardforwarder',name="Open in CLARIN Switchboard",forwarder=Forwarder('switchboard','CLARIN Switchboard',SWITCHBOARD_FORWARD_URL),allowdefault=False) if SWITCHBOARD_FORWARD_URL else None,
+            ForwardViewer(id='frogforwarder',name="Continue with Frog",forwarder=Forwarder('frog','Frog',FROG_FORWARD_URL)) if FROG_FORWARD_URL else None,
             extension='.folia.xml', #set an extension or set a filename:
             removeextension='.tok',
             multi=True,
@@ -134,6 +136,7 @@ PROFILES = [
             FoLiAViewer(),
             FLATViewer(url=FLATURL, mode='viewer') if FLATURL else None,
             ForwardViewer(id='switchboardforwarder',name="Open in CLARIN Switchboard",forwarder=Forwarder('switchboard','CLARIN Switchboard',SWITCHBOARD_FORWARD_URL),allowdefault=False) if SWITCHBOARD_FORWARD_URL else None,
+            ForwardViewer(id='frogforwarder',name="Continue with Frog",forwarder=Forwarder('frog','Frog',FROG_FORWARD_URL)) if FROG_FORWARD_URL else None,
             extension='.folia.xml', #set an extension or set a filename:
             removeextension='.txt',
             multi=True,
